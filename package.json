@@ -9,7 +9,8 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\""
+    "lint": "echo \"No linting configured\"",
+    "build": "electron-builder"
   },
   "keywords": [],
   "author": {
@@ -35,6 +36,30 @@
     "@electron-forge/plugin-auto-unpack-natives": "^7.8.1",
     "@electron-forge/plugin-fuses": "^7.8.1",
     "@electron/fuses": "^1.8.0",
-    "electron": "37.2.4"
+    "electron": "37.2.4",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.diegoaraya.lyricsmusic",
+    "productName": "LyricsMusic Desktop",
+    "directories": {
+        "buildResources": "resources",
+        "output": "dist"
+    },
+    "files": [
+        "src/**/*",
+        "lyrics.css",
+        "preload.js",
+        "index.js",
+        "package.json",
+        "resources/**/*"
+    ],
+    "extraResources": [
+        "spotify_tokens.json"
+    ],
+    "win": {
+        "target": "nsis",
+        "icon": "resources/icon.ico"
+    }
   }
 }
