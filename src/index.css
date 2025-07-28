@@ -1,0 +1,8 @@
+body {
+  background: rgba(40, 40, 40, 0.5); /* Color oscuro y translúcido */
+  color: white;
+  margin: 0;
+  padding: 20px;
+  font-size: 1.5em;
+  -webkit-app-region: drag; /* Hace draggable toda la ventana */
+}

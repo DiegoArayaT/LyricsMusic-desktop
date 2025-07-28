@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+  <title>Lyrics!</title>
+  <meta charset="UTF-8" >
+  <script src = "https://code.jquery.com/jquery-3.1.0.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  <!--Personal CSS-->
+  <link href="lyrics.css" rel="stylesheet">
+  
+  <div class="header">
+    <table>
+      <tr>
+        <td class="albumart-cell" rowspan="2">
+          <div class="albumart text-left">
+            <img class="albumart-img" src="../resources/placeholder_album_art.jpeg" alt="Album Art">
+          </div>
+        <td class="info">
+          <div class="song">song</div>
+          <div class="artist">artist</div>
+      <tr>
+        <td>
+          <button class="btn btn-primary btn-sm" onclick="LYRICS_APP.getLyrics()">Get Lyrics</button>
+          <button class="showhide btn btn-success btn-sm" onclick="LYRICS_APP.hideLyrics()">Hide Lyrics</button>
+          <button class="btn btn-warning btn-sm" onclick="authenticateSpotify()">Iniciar sesión con Spotify</button>
+    </table>
+  </div>
+  <div class="lyrics"></div>
+
+  <script src = "../src/ui/getplaying.js"></script>
+  <script>
+    function authenticateSpotify() {
+        // URL de autenticación (ajústala según tu configuración)
+        const authUrl = "http://localhost:3001/auth";
+
+        // Abre la URL en una nueva ventana emergente
+        const authWindow = window.open(authUrl, "SpotifyAuth", "width=500,height=600");
+
+        // Monitorea si la ventana se cierra después de la autenticación
+        const checkAuth = setInterval(() => {
+            if (authWindow.closed) {
+                clearInterval(checkAuth);
+                console.log("✅ Autenticación completada, puedes continuar.");
+                location.reload(); // Refresca la página para usar el token
+            }
+        }, 1000);
+    }
+  </script>

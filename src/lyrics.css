@@ -1,0 +1,95 @@
+body {
+  text-align: center;
+  -webkit-app-region: drag;
+  background-color: rgba(0,0,0,0.6);
+  color: #ffffff;
+  overflow: hidden;
+}
+
+table {
+  border: 1px solid #fff;
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+}
+
+tr {
+  border: 1px solid #fff;
+}
+
+td {
+  border: 1px solid #fff;
+}
+
+.header {
+  -webkit-app-region: drag;
+  height: 20vh;
+  min-height: 125px;
+}
+
+.albumart-cell {
+  width: 120px;
+}
+
+.albumart {
+  padding: 10px 0px 10px 10px;
+}
+
+.albumart-img {
+  height: 100px;
+  width: 100px;
+  border-radius: 5px;
+}
+
+.info {
+  padding: 0px 10px 0px 10px;
+}
+
+.song {
+  font-size: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@keyframes scroll-left {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+
+.artist {
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn {
+  width: 100px;
+  -webkit-app-region: no-drag;
+}
+
+.lyrics-outer {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lyrics {
+  overflow: hidden scroll;
+  height: 70vh;
+  max-height: 70vh;
+  white-space: pre-wrap;
+  font-size: 14px;
+  -webkit-app-region: no-drag;
+  height: 100%;
+  width: 100%;
+  padding: 0px 10px 0px 10px;
+}
