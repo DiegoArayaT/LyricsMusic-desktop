@@ -1,6 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 const SpotifyWebApi = require('spotify-web-api-node');
+const fs = require('fs');
 
 const app = express();
 const port = 3001; // Puerto en el que escucharemos la respuesta de Spotify
@@ -12,6 +13,15 @@ const spotifyApi = new SpotifyWebApi({
     redirectUri: process.env.SPOTIFY_REDIRECT_URI || `http://localhost:${port}/callback`
 });
 
+// Al iniciar, intenta cargar el refresh token previamente guardado
+try {
+    const tokens = JSON.parse(fs.readFileSync('spotify_tokens.json', 'utf-8'));
+    if (tokens.refreshToken) {
+        spotifyApi.setRefreshToken(tokens.refreshToken);
+    }
+} catch (err) {
+    // No hay archivo todavía, no pasa nada
+}
 
 // URL de autenticación
 const scopes = ['user-read-currently-playing', 'user-read-playback-state'];
@@ -22,7 +32,6 @@ console.log("Abre este enlace en tu navegador para autenticarte:", authUrl);
 app.get('/auth', (req, res) => {
     res.redirect(authUrl); // Redirige al usuario a Spotify para autenticarse
 });
-
 
 // Servidor Express para recibir el código de autorización
 app.get('/callback', async (req, res) => {
@@ -43,6 +52,9 @@ app.get('/callback', async (req, res) => {
         // Asignar el token a la API
         spotifyApi.setAccessToken(accessToken);
         spotifyApi.setRefreshToken(refreshToken);
+
+        // Guardar refresh token en disco
+        fs.writeFileSync('spotify_tokens.json', JSON.stringify({ refreshToken }), 'utf-8');
 
         res.send("Autenticación exitosa. Puedes cerrar esta ventana.");
 
@@ -86,7 +98,6 @@ async function getAccessToken() {
     }
 }
 
-
 async function getCurrentSong(accessToken) {
     spotifyApi.setAccessToken(accessToken);
     try {
@@ -107,6 +118,5 @@ async function getCurrentSong(accessToken) {
         return ["", "", ""];
     }
 }
-
 
 module.exports = { getAccessToken, refreshAccessToken, getCurrentSong };
