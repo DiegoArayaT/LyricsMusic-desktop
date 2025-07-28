@@ -27,11 +27,17 @@
 
   <script src = "../src/ui/getplaying.js"></script>
   <script>
-    function authenticateSpotify() {
-        // URL de autenticación (ajústala según tu configuración)
+function authenticateSpotify() {
+    // 1. Abre una ventana pequeña para hacer logout en Spotify
+    const logoutWin = window.open(
+        "https://accounts.spotify.com/logout",
+        "SpotifyLogout",
+        "width=400,height=400"
+    );
+    // 2. Espera 1.5 segundos y abre la ventana de login
+    setTimeout(() => {
+        if (logoutWin) logoutWin.close();
         const authUrl = "http://localhost:3001/auth";
-
-        // Abre la URL en una nueva ventana emergente
         const authWindow = window.open(authUrl, "SpotifyAuth", "width=500,height=600");
 
         // Monitorea si la ventana se cierra después de la autenticación
@@ -42,5 +48,6 @@
                 location.reload(); // Refresca la página para usar el token
             }
         }, 1000);
-    }
-  </script>
+    }, 1500); // 1.5 segundos de espera para asegurar el logout
+}
+</script>

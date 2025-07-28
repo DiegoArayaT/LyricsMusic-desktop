@@ -23,7 +23,7 @@ const LYRICS_APP = (function () {
     }
 
     async function loadNewLyrics() {
-        console.log("Cargando nueva canción...");
+        console.log('Cargando nueva canción...');
 
         let token = await getAccessToken();
         if (!token) {
@@ -46,10 +46,16 @@ const LYRICS_APP = (function () {
         const song = track[1];
         const albumArtUrl = track[2];
 
-        console.log(`Ahora suena: ${artist} - ${song}`);
+        // Limpia paréntesis y feats del título y artista
+        const cleanSong = song.replace(/\s*\(.*?\)\s*/g, '').trim();
+        const cleanArtist = artist.replace(/\s*\(.*?\)\s*/g, '').trim();
+
+        // Arma el query final
+        const query = `${cleanSong} - ${cleanArtist}`;
+        console.log('[Frontend] query armado:', query);
 
         document.querySelector(".lyrics").textContent = "Buscando letra...";
-        const lyrics = await getLyrics(artist, song);
+        const lyrics = await getLyrics(query);
         document.querySelector(".lyrics").textContent = lyrics;
 
         document.querySelector(".albumart-img").src = albumArtUrl;

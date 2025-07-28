@@ -114,7 +114,12 @@ async function getCurrentSong(accessToken) {
             return ["", "", ""];
         }
     } catch (err) {
-        console.error("Error obteniendo la canción:", err);
+        // Imprime el error de todas formas posibles
+        try {
+            console.error("Error obteniendo la canción (JSON):", JSON.stringify(err, null, 2));
+        } catch (jsonErr) {
+            console.error("Error obteniendo la canción (raw):", err);
+        }
         return ["", "", ""];
     }
 }
